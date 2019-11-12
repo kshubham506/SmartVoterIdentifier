@@ -2,6 +2,9 @@ import os
 from PIL import Image, ImageTk
 import cv2
 import numpy as np
+from time import sleep
+
+
 
 def takeimage(id):
     print("\nTakign images for user : ",id)
@@ -24,7 +27,7 @@ def takeimage(id):
     
             count =count +1
             
-            cv2.imwrite("TrainingImage\ "+id +'.'+ str(count) + ".jpg", gray[y:y+h,x:x+w])
+            cv2.imwrite("TrainingImage\ "+id +''+ str(count) + ".jpg", gray[y:y+h,x:x+w])
             #display the frame
             cv2.imshow('frame',frame)
         #wait for 100 miliseconds 
@@ -64,8 +67,8 @@ def getImagesAndLabels(path):
         pilImage=Image.open(imagePath).convert('L')
         imageNp=np.array(pilImage,'uint8')
         
-        abc=os.path.split(imagePath)[-1].split(".")[1]
-#        print("\n",abc)
+        abc=os.path.split(imagePath)[-1].split(".")[0]
+        print("\n",abc)
         Id=int(abc)
         faces.append(imageNp)
         Ids.append(Id)        
@@ -86,12 +89,13 @@ def castVote():
         gray=cv2.cvtColor(im,cv2.COLOR_BGR2GRAY)
         faces=faceCascade.detectMultiScale(gray, 1.2,5) 
         
+        conf=100
         for(x,y,w,h) in faces:
             cv2.rectangle(im,(x,y),(x+w,y+h),(225,0,0),2)
             Id, conf = recognizer.predict(gray[y:y+h,x:x+w])
             print(Id," : ",conf)                                   
             
-        if conf<40:
+        if conf<45:
                 break 
             
         cv2.imshow('im',im)
@@ -105,6 +109,8 @@ def castVote():
     
     print("Vote casted")
      
-#takeimage("shubham")   
+num=np.random.randint(low=100000,high=999999,size=[1,])
+#takeimage(str(num[0]))   
 #TrainImages()
+#sleep(5)
 castVote()
