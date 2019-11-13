@@ -3,9 +3,18 @@ from PIL import Image, ImageTk
 import cv2
 import numpy as np
 from time import sleep
+import time
 from flask import Flask ,redirect, url_for, request 
+from flask_cors import CORS
+import pymysql
+
 
 app = Flask(__name__) 
+CORS(app)
+
+db = pymysql.connect("localhost","root","","smartvote" )
+
+
 
 def takeimage(id):
     try:
@@ -122,25 +131,70 @@ def castVote():
         cv2.destroyAllWindows()
     
 
+def checkDatabase(name,dob,phone):
+    db = pymysql.connect("localhost","root","","smartvote" )
+    cursor = db.cursor()
     
-     
-#num=np.random.randint(low=100000,high=999999,size=[1,])
-#takeimage(str(num[0]))   
-#TrainImages()
-#sleep(5)
-#castVote()
+
+    quer="SELECT * from data where name='"+name+"' and dob='"+dob+"' and phone='"+phone+"';"
+#        print(quer)
+    cursor.execute(quer)
+    myresult = cursor.fetchone()
+    db.close()
+    print(myresult)
+    if myresult==None:
+        return 1
+    else:
+        return 0
+
+
+        
+def saveinDatabse(vid,name,dob,phone,pin,address,state,city):
+    db = pymysql.connect("localhost","root","","smartvote" )
+    cursor = db.cursor()
+    
+#    try:
+    epoch_time = str(int(time.time()))
+    quer="insert into data(vid,name,dob,phone,pin,address,state,city,time) values('%s','%s','%s','%s','%s','%s','%s','%s','%s')"%(vid,name,dob,phone,pin,address,state,city,epoch_time)
+    print(quer)
+    cursor.execute(quer)
+    db.commit()
+    db.close()
+    return 1
+#    except:
+#        db.close()
+#    return 0
+        
+        
 
 @app.route("/takeimage",methods=['POST','GET']) 
 def takeimg(): 
     vid = request.args.get('vid') 
-    print("Taking images for voter id : ",vid)
+    name=request.args.get('name') 
+    dob=request.args.get('dob') 
+    phone=request.args.get('phone') 
+    pin=request.args.get('pin') 
+    address=request.args.get('address') 
+    state=request.args.get('state') 
+    city=request.args.get('city') 
     
-    var=takeimage(vid)
-#    var=1
-    if var==1:
-        return {'status':200}
-    else :
-        return {'status':204}
+    val=checkDatabase(name,dob,phone)
+#    val=1
+    if val==1:
+        print("Taking images for voter id : ",vid)
+        var=takeimage(vid)
+        if var==1:
+            var1=saveinDatabse(vid,name,dob,phone,pin,address,state,city)
+            if var1==1:
+                return str({"status":200})
+            else:
+                return str({"status":2041})
+        else :
+            return str({"status":204})
+    elif val==0:
+        return str({"status":206})
+    else:
+        return str({"status":208})
     
 
 @app.route("/train",methods=['POST','GET']) 
@@ -149,9 +203,9 @@ def train():
 
     var=TrainImages()
     if var==1:
-        return {'status':200}
+        return str({"status":200})
     else :
-        return {'status':204}
+        return str({"status":204})
     
 @app.route("/cast",methods=['POST','GET']) 
 def cast(): 
@@ -162,9 +216,15 @@ def cast():
     suid=str(uid)
 #    print(suid)
     if suid[:6]==vid:
-        return {'status':200}
+        return str({"status":200})
     else :
-        return {'status':204}
+        return str({"status":204})
+    
+@app.route("/fetch",methods=['POST','GET']) 
+def fetch(): 
+    print("fecthing Data")
+    fetchdata()
+    return "Data Fetched"
     
 
 
