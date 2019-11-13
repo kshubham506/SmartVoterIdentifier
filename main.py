@@ -3,43 +3,44 @@ from PIL import Image, ImageTk
 import cv2
 import numpy as np
 from time import sleep
+from flask import Flask ,redirect, url_for, request 
 
 
 
 def takeimage(id):
-    print("\nTakign images for user : ",id)
-    
-    harcascadePath = "haarcascade_frontalface_default.xml"
-    detector=cv2.CascadeClassifier(harcascadePath)
-    
-    cam=cv2.VideoCapture(0)
-    cv2.namedWindow("CaptureImage  : " )
-    
-    count=0
-    while True:
-        ret , frame= cam.read()
-        gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+    try:
+        harcascadePath = "haarcascade_frontalface_default.xml"
+        detector=cv2.CascadeClassifier(harcascadePath)
+        cam=cv2.VideoCapture(0)
+        cv2.namedWindow("CaptureImage" )
         
-        faces = detector.detectMultiScale(gray, 1.3, 5)
-       
-        for (x, y, w, h) in faces:
-            cv2.rectangle(frame, (x, y), (x+w, y+h), (0, 255, 0), 2)
-    
-            count =count +1
+        count=0
+        while True:
+            ret , frame= cam.read()
+            gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
             
-            cv2.imwrite("TrainingImage\ "+id +''+ str(count) + ".jpg", gray[y:y+h,x:x+w])
-            #display the frame
-            cv2.imshow('frame',frame)
-        #wait for 100 miliseconds 
-        if cv2.waitKey(100) & 0xFF == ord('q'):
-            break
-        # break if the sample number is morethan 100
-        elif count>=60:
-            break
-    cam.release()
-    cv2.destroyAllWindows() 
-    
-    print("\nImages Taken")
+            faces = detector.detectMultiScale(gray, 1.3, 5)
+           
+            for (x, y, w, h) in faces:
+                cv2.rectangle(frame, (x, y), (x+w, y+h), (0, 255, 0), 2)
+        
+                count =count +1
+                
+                cv2.imwrite("TrainingImage\ "+id +''+ str(count) + ".jpg", gray[y:y+h,x:x+w])
+                #display the frame
+                str2="For Voter : " + id
+                cv2.imshow(str2,frame)
+            if cv2.waitKey(100) & 0xFF == ord('q'):
+                break
+            # break if the sample number is morethan 60
+            elif count>=60:
+                break
+        return 1
+    except:
+        return 2
+    finally:
+        cam.release()
+        cv2.destroyAllWindows() 
     
     
 def TrainImages():
@@ -108,9 +109,32 @@ def castVote():
     cv2.destroyAllWindows()
     
     print("Vote casted")
+    
      
-num=np.random.randint(low=100000,high=999999,size=[1,])
+#num=np.random.randint(low=100000,high=999999,size=[1,])
 #takeimage(str(num[0]))   
 #TrainImages()
 #sleep(5)
-castVote()
+#castVote()
+
+
+app = Flask(__name__) 
+
+
+@app.route("/takeimage",methods=['POST','GET']) 
+def hello_world(): 
+    vid = request.args.get('vid') 
+    print("Taking images for voter id : ",vid)
+    
+    var=takeimage(vid)
+    if var==1:
+        return "Images Taken"
+    else :
+        return "Error while takign images"
+    
+
+
+
+
+if __name__ == '__main__': 
+       app.run(debug = True) 
