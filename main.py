@@ -23,6 +23,7 @@ def takeimage(id):
         cam=cv2.VideoCapture(0)
         cv2.namedWindow("CaptureImage" )
         
+        
         count=0
         while True:
             ret , frame= cam.read()
@@ -146,8 +147,6 @@ def checkDatabase(name,dob,phone):
         return 1
     else:
         return 0
-
-
         
 def saveinDatabse(vid,name,dob,phone,pin,address,state,city):
     db = pymysql.connect("localhost","root","","smartvote" )
@@ -164,8 +163,57 @@ def saveinDatabse(vid,name,dob,phone,pin,address,state,city):
 #    except:
 #        db.close()
 #    return 0
+    
+def checkvid(vid):
+    db = pymysql.connect("localhost","root","","smartvote" )
+    cursor = db.cursor()
+    
+#    try:
+    quer="select * from data where vid='"+vid+"';";
+    cursor.execute(quer)
+    myresult = cursor.fetchone()
+    db.close()
+    print(myresult)
+    if myresult==None:
+        return 0,"null"
+    else:
+        return 1,myresult
+    
+def findeid(state):
+    db = pymysql.connect("localhost","root","","smartvote" )
+    cursor = db.cursor()
+    
+#    try:
+    quer="select * from elections where state='"+state.lower()+"';";
+    cursor.execute(quer)
+    myresult = cursor.fetchone()
+    db.close()
+    print(myresult)
+    if myresult==None:
+        return 0,"null"
+    else:
+        return 1,myresult
         
-        
+@app.route("/checkvid",methods=['POST','GET']) 
+def valvid(): 
+    print("Checking Vid")
+    vid = request.args.get('vid')      
+    stat,val=checkvid(vid)
+    print("CheckVidRoite",stat,val)
+    if stat==0:
+        return "null"
+    else:
+        stat1,val1=findeid(val[6])
+        if stat1==0:
+            return str(val[6]+"-"+val[7]+"-null-null")
+        else:
+            print("Training the images")
+            val2=TrainImages()
+            print("Trained Images Response : ",val2)
+            eid=val1[0]
+            ename=val1[1]
+            return str(val[6]+"-"+val[7]+"-"+eid+"-"+ename+"-"+val[9]+"-"+val[11])
+    
 
 @app.route("/takeimage",methods=['POST','GET']) 
 def takeimg(): 
@@ -178,7 +226,7 @@ def takeimg():
     state=request.args.get('state') 
     city=request.args.get('city') 
     
-    val=checkDatabase(name,dob,phone)
+    val=checkDatabase(name.lower(),dob,phone)
 #    val=1
     if val==1:
         print("Taking images for voter id : ",vid)
@@ -207,26 +255,65 @@ def train():
     else :
         return str({"status":204})
     
+def saveCastedVote(vid,eid):
+    db = pymysql.connect("localhost","root","","smartvote" )
+    cursor = db.cursor()
+    
+#    try:
+    epoch_time = str(int(time.time()))
+    quer="update data set eid='%s',vtime='%s',partyname='nan' where vid='%s'" % (eid,epoch_time,vid)
+    print(quer)
+    cursor.execute(quer)
+    db.commit()
+    db.close()
+    return 1
+#    except:
+#        db.close()
+#    return 0
+    
 @app.route("/cast",methods=['POST','GET']) 
 def cast(): 
     print("casting the vote")
     vid = request.args.get('vid') 
-
+    eid= request.args.get('eid') 
+#    return str(vid)+str(eid)
     uid,conf=castVote()
     suid=str(uid)
-#    print(suid)
     if suid[:6]==vid:
+        saveCastedVote(vid,eid)
+        return str({"status":200})
+    else :
+        return str({"status":204})
+   
+def savePartyName(vid,eid,party):
+    db = pymysql.connect("localhost","root","","smartvote" )
+    cursor = db.cursor()
+    
+#    try:
+    epoch_time = str(int(time.time()))
+    quer="update data set partyname='%s',vtime='%s' where vid='%s'" % (party,epoch_time,vid)
+    print(quer)
+    cursor.execute(quer)
+    db.commit()
+    db.close()
+    return 1
+#    except:
+#        db.close()
+#    return 0
+    
+@app.route("/saveparty",methods=['POST','GET']) 
+def savep(): 
+    print("saving the party")
+    vid = request.args.get('vid') 
+    eid= request.args.get('eid') 
+    party= request.args.get('party') 
+    
+    val=savePartyName(vid,eid,party)
+    if val==1:
         return str({"status":200})
     else :
         return str({"status":204})
     
-@app.route("/fetch",methods=['POST','GET']) 
-def fetch(): 
-    print("fecthing Data")
-    fetchdata()
-    return "Data Fetched"
-    
-
 
 
 if __name__ == '__main__': 
