@@ -1,0 +1,907 @@
+
+
+<!doctype html>
+<html lang="en">
+    <head>
+        
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <title>SmartVote</title>
+       
+        <link rel="stylesheet" href="includes/css/bootstrap.min.css">
+        <link rel="stylesheet" href="includes/css/font-awesome.min.css">
+        <link rel="stylesheet" href="includes/css/main.css">
+        <link rel="stylesheet" href="includes/css/owl.carousel.css">
+        <link rel="stylesheet" href="includes/css/owl.theme.default.min.css">
+        <link rel="stylesheet" href="includes/js/wow.min.js">
+    
+        <link rel="stylesheet" href="includes/css/animate.min.css">        
+        
+        <style>
+            html {
+                scroll-behavior: smooth;
+                }
+
+            #loader{
+                position: fixed;
+                left: 0px;
+                top: 0px;
+                width: 100%;
+                height: 100%;
+                z-index: 9999;
+                background: url('includes/image/eclipse.gif') 50% 50% no-repeat rgb(249,249,249);
+                background-size: 100px;
+                 
+            }
+            #loader11{
+                
+               position: fixed;
+              top:65%;
+                left:40%;
+              
+                z-index: 9999;
+              
+            }
+            .centered {
+                  position: absolute;
+                  top: 50%;
+                  left: 20%;
+                  transform: translate(-50%, -50%);
+                  z-index: 99999;
+            }
+            .regform{
+                border-radius: 20px;
+                box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.1);
+                padding: 20px;
+               
+            }
+            .navbar-scroll{
+                /*background:rgba(70, 219, 249, 0.9);*/
+                background-color: #472b62;
+            }
+        </style>
+        
+        
+    <script src="includes/js/jquery-3.2.1.min.js"></script>
+    <script src="includes/js/bootstrap.bundle.min.js"></script>
+    <script src="includes/js/owl.carousel.min.js"></script>
+    <script src="includes/js/angular.min.js"></script>
+
+
+    <script>
+      
+    </script>
+    
+      
+    </head>
+    <body >
+        
+    <div id="loader" style="display:none">
+     
+            <div class="row " >
+                <div class="col-12 text-center">
+                    <p id="loader1" style="margin-top:35%;">Server Error</p>
+                    
+                    <div class="party" style="display:none">
+                    
+                        <button type="button" onclick="saveparty('shelby')" class="col-6 btn btn-info" style="margin:10px;padding:7px;" id="party1">
+                            Shelby Party
+                        </button>
+                        
+                        <button type="button" onclick="saveparty('yums')" class="col-6 btn btn-warning" style="margin:10px;padding:7px;" id="party2">
+                            Party Of YUMS
+                        </button>
+                        
+                        <button type="button" onclick="saveparty('sktechhub')" class="col-6 btn btn-success" style="margin:10px;padding:7px;" id="party3">
+                            SKTechHub Republic
+                        </button>
+                    </div>
+                </div>
+            </div>
+      
+    </div>
+        
+      
+    
+     <nav class="navbar navbar-dark navbar-expand-sm fixed-top" id="navbar">
+            <div class="container">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#Navbar">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <a class="navbar-brand " href="index.php"><img src="includes/image/logo24.png" style="" class="toplogo"></a>
+                <div class="collapse navbar-collapse justify-content-end" id="Navbar">
+                    <ul class="navbar-nav ">
+                            <li class="nav-item active"><a class="nav-link" href="index.html" style="font-size:18px;color:white">Home</a></li>
+                            <li class="nav-item active"><a class="nav-link" style="font-size:18px;color:white" href="#reg">Register</a></li>
+                            <li class="nav-item active"><a class="nav-link" style="font-size:18px;color:white" href="#cast">Cast Vote</a></li>
+                            <li class="nav-item active"><a class="nav-link" style="font-size:18px;color:white" onclick="eci()" href="#">About ECI</a></li>
+                    </ul>
+
+                </div>
+            </div>
+    </nav>
+
+    <section class="home_banner_area" >
+           
+            <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                  <ol class="carousel-indicators">
+                    <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                    <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                   
+                  </ol>
+
+                  <div class="carousel-inner">
+                    
+                      <div class="carousel-item active ">
+                       <img class="d-block w-100 h-100 min-vh-100" src="includes/image/Picture1.png" style="height:100%" alt="India Vote">
+                    </div>
+                      
+                      <div class="carousel-item">
+                       <img class="d-block w-100 h-100 min-vh-100" src="includes/image/Picture2.png" alt="Lets Vote Together">
+                    </div>
+
+                  
+
+                  
+                  </div>
+
+                  <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                  </a>
+                  <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                  </a>
+            </div>
+        
+           <!-- <div class=" centered">
+                <div clss="row">
+                    <div class="col">
+                        <div  style="color:white;font-size:32px">Centered</div>
+                    </div>
+                </div>
+            </div>
+        -->
+    </section>
+        
+    <section class="" id="reg">
+        <div clas="container">
+            <div class="row align-items-center">
+                
+                <div class="col-6 text-center">
+                    
+                    <div class="regi owl-carousel owl-theme">
+                        
+                        <div class="item">
+                            <h3>"One Man One Vote"</h3>
+                            <p style="padding-left:20px">Excercise your right and fulfill your responsibility of being a citizen of India! Make your vote count and help improve
+                            the evergrowing government of India.</p>
+                        </div>
+                        
+                        <div class="item">
+                            <h3>“Democracy is about voting and it’s about a majority vote. And it’s time that we started exercising the Democratic process.”</h3>
+                            <p style="padding-left:20px">- Debbie Stabenow</p>
+                        </div>
+                        
+                        <div class="item">
+                            <h3>"There's no such thing as a vote that doesn't matter."</h3>
+                            <p style="padding-left:20px">- Barack Obama</p>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                
+                <div class="col-6  text-center">
+                    <div class="row">
+                        <div class="col-7 text-center" style="margin-left:180px;padding:50px;">
+                            
+                                                
+                            <form class="regform" action=""  enctype="multipart/form-data">
+                                
+                                <h3>Register</h3><br>
+
+                                <div class="form-group row">
+                                        <div class="col-12 text-left">
+                                          <!--  <label for="pname" class="col-12 col-form-label ">Full Name</label> -->
+                                            <input type="text" class="form-control" id="pname" placeholder="Full Name">
+                                        </div> 
+                                </div>  
+
+                                <div class="form-group row">
+                                        <div class="col-12 text-left">
+                                           <!-- <label for="pphone" class="col-12 col-form-label">Phone</label> -->
+                                            <input type="number" class="form-control" id="pphone" placeholder="Phone Number">
+                                        </div> 
+                                </div>
+
+                                <div class="form-group row">
+                                        <div class="col-12 text-left">
+                                           <!-- <label for="ppin" class="col-3 col-form-label">Pin Code</label> -->
+                                            <input type="number" class="form-control" id="ppin" placeholder="Pin Code">
+                                        </div> 
+                                </div>
+                               
+                               
+                               <div class="form-group row">
+                                        <div class="col-4 text-left">
+                                            <input type="number" class="form-control" id="pday" placeholder="Day">
+                                          
+                                        </div> 
+                                        <div class="col-4 text-left">
+                                            <input type="number" class="form-control" id="pmonth" placeholder="Month">
+                                        </div> 
+                                        <div class="col-4 text-left">
+                                            <input type="number" class="form-control" id="pyear" placeholder="Year">
+                                        </div> 
+                                </div>
+                               
+                               
+
+                               <div class="form-group row">
+                                    <div class="col-12 text-left">
+                                           <!-- <label for="padd1" class="col-3 col-form-label">Address</label> -->
+                                            <input type="text" class="form-control" id="padd" placeholder="Full Address">
+                                        </div> 
+                                </div>
+
+                                <div class="form-group row">
+                                    <div class="col-6 text-left">
+                                          <!--  <label for="pcity" class="col-3 col-form-label">City</label> -->
+                                            <input type="text" class="form-control" id="pcity" placeholder="City">
+                                    </div> 
+                                    
+                                     <div class="col-6 text-left">
+                                           <!-- <label for="pstate" class="col-3 col-form-label">State</label> -->
+                                            <input type="text" class="form-control" id="pstate" placeholder="State">
+                                    </div> 
+                                </div>
+                               
+                               
+                                <div class="form-group row">
+                                    <div class="col-12 text-center">
+                                           <button type="button" class="btn btn-info" onclick="submi()" style="padding:7px;" name="sub">REGISTER</button>
+                                    </div> 
+                                </div>
+                                
+                                <p style=";color:red;" id="err">
+                                    
+                                </p>
+                               
+                        </form>
+                        
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>    
+    </section>
+       
+         
+    <section class="section-gap" id="cast">
+        <div clas="container">
+            <div class="row align-items-center">
+                
+                <div class="col-6  text-center">
+                    <div class="row">
+                        <div class="col-7 text-center" style="margin-left:180px;padding:50px;">
+                            
+                                                
+                            <form class="regform" action=""  enctype="multipart/form-data">
+                                
+                                <h3>Cast Vote</h3><br>
+
+                                <div class="form-group row">
+                                        <div class="col-12 text-left">
+                                          <!--  <label for="pname" class="col-12 col-form-label ">Full Name</label> -->
+                                            <input type="number" class="form-control" id="pvid" placeholder="Voter Id Number">
+                                        </div> 
+                                </div>  
+
+                               
+                                <div class="form-group row">
+                                    <div class="col-12 text-center">
+                                           <button type="button" class="btn btn-info" onclick="fetch()" style="padding:7px;" name="sub">FETCH</button>
+                                         <button type="button" class="btn btn-info" onclick="clearbut()" style="padding:7px;" name="sub">CLEAR</button>
+                                    </div> 
+                                    
+                                     
+                                </div>
+                                
+                                <div class="form-group row userimg" style="display: none">
+                                    <div class="col-12 text-center">
+                                           <img id="usrimg" class="rounded" src="" style="width:80px">
+                                    </div> 
+                                </div>
+                                
+                                <p style=";color:red;" id="err1">
+                                    
+                                </p>
+                                
+                                <div class="userdata" id="userdata" style="display:none">
+                                    <div class="form-group row">
+                                        <div class="col-6 text-left">
+                                              <!--  <label for="pcity" class="col-3 col-form-label">City</label> -->
+                                                <input type="text" class="form-control" id="pcity1" placeholder="null" disabled>
+                                        </div> 
+
+                                         <div class="col-6 text-left">
+                                               <!-- <label for="pstate" class="col-3 col-form-label">State</label> -->
+                                                <input type="text" class="form-control" id="pstate1" placeholder="null" disabled>
+                                        </div> 
+                                        
+                                        
+                                        <!--election elligible button-->
+                                        <button type="button" class="col-11 text-center btn btn-info" onclick="cast()" style="margin:10px;padding:7px;" id="election"></button>
+                                        
+                                        <input type="text"  placeholder="null" disabled style="display:none" id="electionid"  >
+                                    
+                                    </div>
+                                    
+                                   
+                                    
+                                </div>
+                               
+                            </form>
+                        
+                        </div>
+                        
+                    </div>
+                </div>
+                
+                
+                <div class="col-6 text-center">
+                    
+                     <div class="fetch owl-carousel owl-theme">
+                         
+                         <div class="item">
+                                 <h3 style="padding-right:20px">"Democracy cannot succeed unless those who express their choice are prepared to choose wisely. The real safeguard of democracy, therefore, is education."</h3>
+                                <p> - Franklin D. Roosevelt</p>
+                         
+                         </div>
+                         
+                            <div class="item">
+                                 <h3 style="padding-right:20px">"In a democracy the poor will have more power than the rich, because there are more of them, the will of the majority is supreme."</h3>
+                                <p> - Aristotle</p>
+                         
+                         </div>
+                    </div>
+                </div>
+                    
+            </div>
+        </div>    
+    </section>
+       
+        
+        
+    <!-- Start Footer Area -->
+	<footer class="footer-area section-gap" id="footer">
+		<div class="container">
+			<div class="row">
+				<div class="col-12 col-sm-3 single-footer-widget">
+					<h4>SmartVote</h4>
+					<ul>
+						<li><a href="privacy_policy.html">Privacy Policy</a></li>
+						
+					</ul>
+				</div>
+				
+               
+			
+			</div>
+            
+            <br>
+            
+            <div class="row">
+              <div class="col-12" align="center">
+                  <a href="https://t.me/sktechhub" style="color:white"><i class="fa fa-telegram" aria-hidden="true" style="font-size: 34px;padding-right: 20px;"></i></a>
+                  <a href="mailto:3pg3h@ichigo.me" style="color:white"><i class="fa fa-envelope" aria-hidden="true" style="font-size: 34px;padding-right: 20px;"></i></a>
+                </div>
+            </div>
+            
+          
+		</div>
+	</footer>
+	<!-- End Footer Area -->
+
+        
+        <script>
+            
+            
+            $(function () {
+                $(document).scroll(function ()
+                   {
+                        var $nav = $(".navbar");
+                        $nav.toggleClass('navbar-scroll', $(this).scrollTop() > $nav.height());
+                    });
+                
+                
+            }); 
+            
+            $('.regi').owlCarousel({
+                    loop:true,
+                    margin:10,
+                    nav:false,
+                    dots:false,
+                    autoplay:true,
+                    
+                    autoplayTimeout: 4000,
+                    autoplaySpeed: 4000,
+                    autoplayHoverPause:true,
+                    responsive:{
+                        0:{
+                            items:1
+                        },
+                        600:{
+                            items:1
+                        },
+                        1000:{
+                            items:1
+                        }
+                    }
+                })
+            
+            $('.fetch').owlCarousel({
+                    loop:true,
+                    margin:10,
+                    nav:false,
+                    dots:false,
+                    autoplay:true,
+                    
+                    autoplayTimeout: 4000,
+                    autoplaySpeed: 4000,
+                    autoplayHoverPause:true,
+                    responsive:{
+                        0:{
+                            items:1
+                        },
+                        600:{
+                            items:1
+                        },
+                        1000:{
+                            items:1
+                        }
+                    }
+                })
+            
+            
+            function clearbut(){
+                window.open("index.html","_self");
+            }
+            
+            function eci(){
+                var cnf=confirm("This will open an external page . \nAre you sure you want to go there?");
+                if(cnf){
+                    window.open("https://eci.gov.in/","_blank");
+                }
+            }
+            
+            function submi()
+            {
+               
+                 $("#loader").css("background", "url('includes/image/eclipse.gif') 50% 50% no-repeat rgb(249,249,249)"); 
+                $("#loader").css("background-size","100px");
+             
+                           
+                
+                var name=$("#pname").val();
+                var phone=$("#pphone").val();
+                var pin=$("#ppin").val();
+                var add1=$("#padd").val();
+                var city=$("#pcity").val();
+                var state=$("#pstate").val();
+                var day=$("#pday").val().toString();
+                var month=$("#pmonth").val().toString();
+                var year=$("#pyear").val();
+                
+                
+                
+                var k=1;var msg="";
+                  if(name==undefined || name.length<2){
+                      k=0;
+                      msg+="\nPlease enter your full name.";
+                  }
+                  if(phone==undefined || phone.length!=10){
+                      k=0;
+                      msg+="\nPlease enter correct phone number.";
+                  }
+                  if(pin==undefined || pin.length!=6){
+                      k=0;
+                      msg+="\nInvalid Pin Code.";
+                  }
+                  if(add1==undefined || add1.length<5){
+                      k=0;
+                      msg+="\nPlease enter corect address.";
+                  }
+                  if(city==undefined || city.length<2){
+                      k=0;
+                      msg+="\nPlease enter correct city name.";
+                  }
+                  if(state==undefined || state.length<2){
+                      k=0;
+                      msg+="\nPlease enter correct state.";
+                  }
+                if(day==undefined || parseInt(day)<0 || parseInt(day)>31 ){
+                      k=0;
+                      msg+="\nPlease enter correct day.";
+                  }
+                    
+                if(month==undefined || parseInt(month)<0 || parseInt(month)>12 ){
+                      k=0;
+                      msg+="\nPlease enter correct month.";
+                  }
+                if(day==undefined || parseInt(year)<0 || parseInt(year)>2001 || parseInt(year)<1915 ){
+                      k=0;
+                      msg+="\nPlease enter correct year.";
+                  }
+                
+                if(k==0){
+                    //$("#err").Text="safdsf";
+                    document.getElementById("err").innerHTML="Please correct the errors."
+                    alert(msg);
+                    
+                }
+                else{
+                    
+                    $("#loader").show();
+                    
+                    $("#loader1").text("Please wait... accessing Camera !");
+
+                    var timeout1=setTimeout(function(){
+                            $("#loader1").text("Make sure the background has a solid colour.");
+                        },1500);
+                    
+                    var vid=randomgen();
+                    var dob1=day+month+year;
+                    //name="shubham";phone="7033265522";pin="828207";address="lpu";city="phagwara";state="punjab";var dob1="02091998";
+                    
+                    $.ajax({
+                        url: ' http://127.0.0.1:5000/takeimage?vid='+vid+"&name="+name+"&phone="+phone+"&pin="+pin+"&address="+add1+"&city="+city+"&state="+state+"&dob="+dob1,
+                       
+                    error: function (request, error)
+                        {
+                           var img='includes/image/close.png';
+                            $("#loader1").text("Server Error.");
+                             $("#loader").css("background", "url(" + img + ") 50% 50% no-repeat rgb(249,249,249)"); 
+                           
+                            
+                           $("#loader").css("background-size","100px");
+                            
+                           document.getElementById("err").innerHTML="Server Error !! Try Again Later.";
+                           setTimeout(function(){
+                                    $("#loader").hide();
+                                
+                                },3000);
+                        },
+                        success: function (result) 
+                        {
+                            //$("#loader").hide();
+                            result=JSON.stringify(result);
+                            console.log(result);
+                            
+                            
+                            var tok=result;
+                            
+                            
+                            var msg1="";
+                             
+                            
+                            var img='includes/image/close.png';
+                           
+                            clearTimeout(timeout1);
+                            
+                            if(result==undefined || result==null){
+                                msg1="Sever not running";
+                                 $("#loader1").text(msg1);
+                            }
+                            else if(result.includes("200")){//all ok
+                                msg1="Success ! Your Voter Id is : "+vid;
+                                img='includes/image/confirmed.gif';
+                                 $("#loader1").text(msg1);
+                            }
+                            else if(result.includes("204")){//error while taking image
+                                msg1="Error ! Please Try Again";
+                                $("#loader1").text(msg1);
+                            }
+                            else if(result.includes("2041")){//error while taking image
+                                msg1="Error ! Please Try Again";
+                                $("#loader1").text(msg1);
+                            }
+                            else if(result.includes("206")){//already exist
+                                msg1="Error : Your account already exists!";
+                                $("#loader1").text(msg1);
+                            }
+                            else if(result.includes("208")){//db error
+                                msg1="Error : Database";
+                                $("#loader1").text(msg1);
+                            }
+                            
+                            //background: url('includes/image/eclipse.gif') 50% 50% no-repeat rgb(249,249,249);
+                            $("#loader").css("background", "url(" + img + ") 50% 50% no-repeat rgb(249,249,249)"); 
+                             $("#loader").css("background-size","100px");
+                            
+                            document.getElementById("err").innerHTML=msg1;
+                            setTimeout(function(){
+                                    $("#loader").hide();
+                                
+                                },3000);
+                            
+                            console.log(msg1);
+                        
+                        },
+                        async: true
+                    }); 
+                    
+                     
+                    
+                }
+                
+                  
+            }
+            
+            function randomgen(){
+                
+                var abc=Math.floor(100000 + Math.random() * 900000);
+                console.log(abc);
+                return abc;
+            }
+            
+            function fetch()
+            {
+                $("#loader").css("background", "url('includes/image/eclipse.gif') 50% 50% no-repeat rgb(249,249,249)"); 
+                $("#loader").css("background-size","100px");
+                
+                
+                var vid=$("#pvid").val().toString();
+                var k=1;var msg="";
+                  if(vid==undefined || vid.length<6){
+                      k=0;
+                      msg+="\nPlease enter voter id.";
+                  }
+                if(k==0){
+                    document.getElementById("err1").innerHTML="Please correct the errors."
+                    alert(msg);
+                }
+                else
+                {
+                    $("#loader").show();
+                    $("#loader1").text("Fetching Details...");
+                    
+                    var timeout2=setTimeout(function(){
+                            $("#loader1").text("This may take some time...");
+                                
+                    },1500);
+                    
+                      $.ajax({
+                        url: ' http://127.0.0.1:5000/checkvid?vid='+vid,
+                        error: function (request, error)
+                            {
+                           var img='includes/image/close.png';
+                            $("#loader1").text("Server Error.");
+                             $("#loader").css("background", "url(" + img + ") 50% 50% no-repeat rgb(249,249,249)"); 
+                           
+                            
+                           $("#loader").css("background-size","100px");
+                            
+                           document.getElementById("err1").innerHTML="Server Error !! Try Again Later.";
+                           setTimeout(function(){
+                                    $("#loader").hide();
+                                },3000);
+                        },
+                        success: function (result) 
+                        {
+                            //$("#loader").hide();
+                            //result=JSON.stringify(result);
+                            console.log(result);
+                            
+                            clearTimeout(timeout2);
+                            
+                            if(result=="null" || result==null){
+                                result="No such voter exists."
+                                document.getElementById("err1").innerHTML=result;
+                                $("#err1").show();
+                                $("#userdata").hide();  
+                                $(".userimg").hide();
+                            }
+                            else{
+                                document.getElementById("err1").innerHTML='';
+                                $("#err1").hide();
+                                $("#userdata").show();  
+                                var abc=result.split("-");
+                                console.log(abc);
+                                 
+                                $("#pstate1").attr("placeholder", abc[0]);
+                                $("#pcity1").attr("placeholder", abc[1]);
+                                
+                                /*
+                                $(".userimg").show();
+                                var abcde=$("#pvid").val().toString();
+                                document.getElementById("usrimg").src="../TrainingImage/"+abcde+"10.jpg";
+                                */
+                                
+                                if(abc[2]=="null"){
+                                    $("#election").show();
+                                    $("#election").text("No elligible elections.");
+                                    $("#election").attr("disabled", true);
+                                }
+                                else{
+                                    $("#election").show();
+                                    if(abc[4]==abc[2] && abc[5]!=undefined && abc[5]!="nan" && abc[5].length>3){
+                                        //already voted
+                                         $("#election").text("Voted : "+abc[3]);
+                                        $("#election").attr("disabled", true);
+
+                                         $("#electionid").attr("placeholder", abc[2]);
+                                        $("#electionid").val(abc[2])
+                                        //$("#electionid").text(abc[2]);
+                                         $("#pvid").attr("disabled", false);
+                                        
+                                    }
+                                    else{
+                                        $("#election").text(abc[3]);
+                                        $("#election").attr("disabled", false);
+
+                                         $("#electionid").attr("placeholder", abc[2]);
+                                        $("#electionid").val(abc[2])
+                                        //$("#electionid").text(abc[2]);
+                                         $("#pvid").attr("disabled", true);
+                                    }
+                                    
+                                }
+                                
+                            }
+                            
+                            
+                            
+                            
+                            setTimeout(function(){
+                                    $("#loader").hide();
+                                    //$("$loader1").text(result);
+                                },1000);
+                            
+                           
+                        
+                        },
+                        async: true
+                    }); 
+                    
+                    
+                }
+                
+            }
+            
+            function cast()
+            {
+             $("#loader").css("background", "url('includes/image/eclipse.gif') 50% 50% no-repeat rgb(249,249,249)"); 
+                $("#loader").css("background-size","100px");
+                
+                
+                $("#loader").show();
+                $("#loader1").text("Please wait... accessing Camera !");
+                
+                var timeout3=setTimeout(function(){
+                            $("#loader1").text("Make sure the background has a solid colour.");
+                        },1500);
+                
+                var eid=$("#electionid").val().toString();
+                var vid=$("#pvid").val().toString();
+                console.log("Eid:"+eid+" ,vid : "+vid)
+                    
+                      $.ajax({
+                        url: ' http://127.0.0.1:5000/cast?vid='+vid+"&eid="+eid,
+                        success: function (result) 
+                        {
+                            //$("#loader").hide();
+                            result=JSON.stringify(result);
+                            console.log(result);
+                            
+                            clearTimeout(timeout3);
+                            
+                            var msg="";
+                            var  img="includes/image/close.png";
+                            if(result.includes("200")){
+                                 img='includes/image/confirmed.gif';
+                                 $("#loader").css("background", "url(" + img + ") 50% 50% no-repeat rgb(249,249,249)"); 
+                                $("#loader").css("background-size","100px");
+                                
+                                $("#err1").hide()
+                                $("#err1").text("");
+                                
+                                 $("#loader1").text("Select the party to vote.");
+                                
+                                $(".party").show();
+                            }
+                            else if(result.includes("204")){
+                                msg1="Face Mismatch! Please Try Again";
+                                $("#loader1").text(msg1);
+                                $("#loader").css("background", "url(" + img + ") 50% 50% no-repeat rgb(249,249,249)"); 
+                                $("#loader").css("background-size","100px");
+                                $("#err1").text(msg1);
+                                $("#err1").show();
+                                setTimeout(function(){
+                                    $("#loader").hide();
+                                
+                                },3000);
+                            }
+                            
+                            
+                            
+
+                        
+                        },
+                        async: true
+                    }); 
+            }
+            
+            function saveparty(partyname)
+            {
+                $("#loader").css("background", "url('includes/image/eclipse.gif') 50% 50% no-repeat rgb(249,249,249)"); 
+                $("#loader").css("background-size","100px");
+                
+                
+                $("#loader").show();
+                $("#loader1").text("Please wait... Casting Vote to "+partyname+" on your behalf !");
+                
+                var eid=$("#electionid").val().toString();
+                var vid=$("#pvid").val().toString();
+                console.log("Eid:"+eid+" ,vid : "+vid+" , Partyname : "+partyname);
+                
+                
+                $.ajax({
+                        url: ' http://127.0.0.1:5000/saveparty?vid='+vid+"&eid="+eid+"&party="+partyname,
+                        success: function (result) 
+                        {
+                            //$("#loader").hide();
+                            result=JSON.stringify(result);
+                            console.log(result);
+                            
+                            
+                            
+                            var msg="";
+                            var  img="includes/image/close.png";
+                            if(result.includes("200")){
+                                 img='includes/image/confirmed.gif';
+                                 $("#loader").css("background", "url(" + img + ") 50% 50% no-repeat rgb(249,249,249)"); 
+                                $("#loader").css("background-size","100px");
+                                
+                                $("#err1").show()
+                                $("#err1").text("Success... Thank you for your contribution!");
+                                
+                                 $("#loader1").text("Success... Thank you for your contribution!");
+                                
+                                $(".party").hide();
+                                $("#election").attr("disabled", true);
+                                setTimeout(function(){
+                                    $("#loader").hide();
+                                
+                                },2000);
+                            }
+                            else if(result.includes("204")){
+                                msg1="Error ! Please Try Again";
+                                $("#loader1").text(msg1);
+                                $("#loader").css("background", "url(" + img + ") 50% 50% no-repeat rgb(249,249,249)"); 
+                                $("#loader").css("background-size","100px");
+                                $("#err1").text("Error ! Please Try Again");
+                                $("#err1").show();
+                                setTimeout(function(){
+                                    $("#loader").hide();
+                                
+                                },3000);
+                            }
+                            
+                            
+                            
+
+                        
+                        },
+                        async: true
+                    }); 
+            }
+        
+        </script>
+    
+    </body>
+</html>
